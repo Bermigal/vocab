@@ -67,37 +67,65 @@ export default function Home() {
   };
 
   return (
-    <main style={{ padding: "2rem", fontFamily: "sans-serif", textAlign: "center" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <img src="/logo2.png" alt="Top Berman English" style={{ width: "100px", marginLeft: "auto" }} />
-      </div>
-      <h1>טופ ברמן אנגלית, זה קל</h1>
-      <h2 style={{ marginBottom: "1.5rem" }}>למדו את המילים הבאות</h2>
+    <div style={{
+      backgroundColor: "#fdfaf4",
+      minHeight: "100vh",
+      fontFamily: "Arial, sans-serif",
+      padding: "1rem"
+    }}>
+      <header style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center"
+      }}>
+        <img src="/logo2.png" alt="Top Berman English" style={{ width: "80px", marginLeft: "auto" }} />
+      </header>
+
+      <h1 style={{
+        textAlign: "center",
+        fontSize: "2rem",
+        margin: "1rem 0",
+        color: "#003366"
+      }}>טופ ברמן אנגלית, זה קל</h1>
+
+      <h2 style={{
+        textAlign: "center",
+        marginBottom: "2rem",
+        color: "#005599"
+      }}>למדו את המילים הבאות</h2>
 
       {current && (
-        <>
-          <div style={{ fontSize: "2rem", marginBottom: "1rem" }}>{current.en}</div>
-          {showHebrew && <div style={{ fontSize: "1.5rem", color: "green" }}>{current.he}</div>}
+        <div style={{
+          backgroundColor: "#ffffff",
+          maxWidth: "400px",
+          margin: "0 auto",
+          padding: "2rem",
+          borderRadius: "16px",
+          boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+          textAlign: "center"
+        }}>
+          <div style={{ fontSize: "2rem", marginBottom: "1rem", color: "#333" }}>{current.en}</div>
+          {showHebrew && <div style={{ fontSize: "1.5rem", color: "green", marginBottom: "1rem" }}>{current.he}</div>}
 
           {!showHebrew && (
-            <button onClick={() => setShowHebrew(true)} style={{ marginBottom: "1rem" }}>
+            <button onClick={() => setShowHebrew(true)} style={buttonStyle}>
               הצג תרגום
             </button>
           )}
           <div style={{ marginTop: "1rem" }}>
-            <button onClick={playAudio}>🔊 שמע מילה</button>{" "}
-            <button onClick={markForReview}>⭐ תרגול חוזר</button>{" "}
-            <button onClick={next}>➡️ הבא</button>
+            <button onClick={playAudio} style={buttonStyle}>🔊 שמע מילה</button>{" "}
+            <button onClick={markForReview} style={buttonStyle}>⭐ תרגול חוזר</button>{" "}
+            <button onClick={next} style={buttonStyle}>➡️ הבא</button>
           </div>
-          <div style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#666" }}>
+          <div style={{ marginTop: "1rem", fontSize: "0.875rem", color: "#888" }}>
             מילה {index + 1} מתוך {currentSet.length} | סבב {round + 1} מתוך 65
           </div>
-        </>
+        </div>
       )}
 
       {reviewWords.length > 0 && (
-        <div style={{ marginTop: "2rem" }}>
-          <h3>מילים לשינון חוזר:</h3>
+        <div style={{ maxWidth: "400px", margin: "2rem auto", padding: "1rem" }}>
+          <h3 style={{ textAlign: "center", color: "#003366" }}>מילים לשינון חוזר:</h3>
           <ul style={{ listStyle: "none", padding: 0 }}>
             {reviewWords.map((w, i) => (
               <li key={i}>{w.en} - {w.he}</li>
@@ -106,9 +134,26 @@ export default function Home() {
         </div>
       )}
 
-      <footer style={{ marginTop: "3rem", fontSize: "0.9rem", color: "#777" }}>
+      <footer style={{
+        textAlign: "center",
+        marginTop: "3rem",
+        padding: "1rem",
+        color: "#999",
+        fontSize: "0.9rem"
+      }}>
         כל הזכויות שמורות לליאור ברמן אמיר
       </footer>
-    </main>
+    </div>
   );
 }
+
+const buttonStyle = {
+  backgroundColor: "#0055aa",
+  color: "white",
+  border: "none",
+  borderRadius: "12px",
+  padding: "0.5rem 1rem",
+  margin: "0.25rem",
+  cursor: "pointer",
+  fontSize: "1rem"
+};
