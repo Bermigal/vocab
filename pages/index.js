@@ -1,20 +1,33 @@
 import { useState, useEffect } from "react";
 import { allWords } from "../allWords";
 
-function getRoundWords(words, round, size = 10, maxRounds = 65) {
+function getRoundWords(words, round, size = 10) {
   const grouped = {};
   for (const word of words) {
     const letter = word.en[0].toLowerCase();
     if (!grouped[letter]) grouped[letter] = [];
     grouped[letter].push(word);
   }
+
   const letters = Object.keys(grouped).sort();
-  const start = (round % maxRounds) * size;
-  const roundLetters = letters.slice(start, start + size);
-  const selected = roundLetters.map(l => {
-    const group = grouped[l];
+  const pickedLetters = [];
+
+  let i = round * size;
+  let attempts = 0;
+  while (pickedLetters.length < size && attempts < letters.length) {
+    const letter = letters[i % letters.length];
+    if (!pickedLetters.includes(letter)) {
+      pickedLetters.push(letter);
+    }
+    i++;
+    attempts++;
+  }
+
+  const selected = pickedLetters.map(letter => {
+    const group = grouped[letter];
     return group[Math.floor(Math.random() * group.length)];
   }).filter(Boolean);
+
   return selected;
 }
 
@@ -55,7 +68,10 @@ export default function Home() {
 
   return (
     <main style={{ padding: "2rem", fontFamily: "sans-serif", textAlign: "center" }}>
-      <h1>ללמוד אנגלית עם ברמן, זה פשוט!</h1>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <img src="/logo2.png" alt="Top Berman English" style={{ width: "100px", marginLeft: "auto" }} />
+      </div>
+      <h1>טופ ברמן אנגלית, זה קל</h1>
       <h2 style={{ marginBottom: "1.5rem" }}>למדו את המילים הבאות</h2>
 
       {current && (
@@ -89,6 +105,10 @@ export default function Home() {
           </ul>
         </div>
       )}
+
+      <footer style={{ marginTop: "3rem", fontSize: "0.9rem", color: "#777" }}>
+        כל הזכויות שמורות לליאור ברמן אמיר
+      </footer>
     </main>
   );
 }
